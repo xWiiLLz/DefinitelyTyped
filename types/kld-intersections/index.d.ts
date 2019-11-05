@@ -15,13 +15,22 @@ type ShapeNames =
     | 'Polyline'
     | 'Rectangle';
 
-export class Point2D {
+interface IPoint2D {
+    x: number;
+    y: number;
+}
+
+export class Point2D implements IPoint2D {
     x: number;
     y: number;
 
     constructor(x: number, y: number);
 }
 
+interface FixedLengthArray<T extends any, L extends number> extends Array<T> {
+    '0': T;
+    length: L;
+}
 export class ShapeInfo<Name extends ShapeNames, T> {
     args: T;
     name: Name;
@@ -67,4 +76,16 @@ export class ShapeInfo<Name extends ShapeNames, T> {
         radiusX: number,
         radiusY: number,
     ): ShapeInfo<'Ellipse', [Point2D, number, number]>;
+
+    static path(pathData: string): ShapeInfo<'Path', (ShapeInfo<ShapeNames, any>)[]>;
+
+    /**
+     * @param points If array of numbers, an even number of coordinates should be specified (i.e. [x1, y1, x2, y2, ...])
+     */
+    static polygon(
+        ...points: IPoint2D[] | number[]
+    ): ShapeInfo<
+        'Polygon',
+        typeof points extends number[] ? Point2D[] : FixedLengthArray<Point2D, typeof points['length']>
+    >;
 }
