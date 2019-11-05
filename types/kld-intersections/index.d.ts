@@ -38,4 +38,24 @@ export class ShapeInfo<Name extends ShapeNames, T> {
         startRadians: number,
         endsRadians: number,
     ): ShapeInfo<'Arc', [Point2D, number, number, number, number]>;
+
+    static quadraticBezier(
+        p1x: number,
+        p1y: number,
+        p2x: number,
+        p2y: number,
+        p3x: number,
+        p3y: number,
+    ): ShapeInfo<'Bezier2', [Point2D, Point2D, Point2D]>;
+
+    static cubicBezier(
+        p1x: number,
+        p1y: number,
+        p2x: number,
+        p2y: number,
+        p3x: number,
+        p3y: number,
+        p4x: number,
+        p4y: number,
+    ): ShapeInfo<'Bezier3', [Point2D, Point2D, Point2D, Point2D]>;
 }
