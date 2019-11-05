@@ -1,39 +1,32 @@
 // Type definitions for kld-intersections 0.6
 // Project: https://github.com/thelonious/kld-intersections
-// Definitions by: William Bergeron-Drouin <https://github.com/me>
+// Definitions by: William Bergeron-Drouin <https://github.com/xWiiLLz>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-/*~ If this module is a UMD module that exposes a global variable 'myLib' when
- *~ loaded outside a module loader environment, declare that global here.
- *~ Otherwise, delete this declaration.
- */
-export as namespace myLib;
+type ShapeNames =
+    | 'Arc'
+    | 'Bezier2'
+    | 'Bezier3'
+    | 'Circle'
+    | 'Ellipse'
+    | 'Line'
+    | 'Path'
+    | 'Polygon'
+    | 'Polyline'
+    | 'Rectangle';
 
-/*~ If this module has methods, declare them as functions like so.
- */
-export function myMethod(a: string): string;
-export function myOtherMethod(a: number): number;
+export class Point2D {
+    x: number;
+    y: number;
 
-/*~ You can declare types that are available via importing the module */
-export interface someType {
-    name: string;
-    length: number;
-    extras?: string[];
+    constructor(x: number, y: number);
 }
 
-/*~ You can declare properties of the module using const, let, or var */
-export const myField: number;
+export class ShapeInfo<T> {
+    args: T;
+    name: ShapeNames;
 
-/*~ If there are types, properties, or methods inside dotted names
- *~ of the module, declare them inside a 'namespace'.
- */
-export namespace subProp {
-    /*~ For example, given this definition, someone could write:
-     *~   import { subProp } from 'yourModule';
-     *~   subProp.foo();
-     *~ or
-     *~   import * as yourMod from 'yourModule';
-     *~   yourMod.subProp.foo();
-     */
-    function foo(): void;
+    constructor(name: ShapeNames, args: T);
+
+    static line(p1x: number, p1y: number, p2x: number, p2y: number): ShapeInfo<[Point2D, Point2D]>;
 }
