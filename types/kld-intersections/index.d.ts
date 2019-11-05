@@ -58,4 +58,13 @@ export class ShapeInfo<Name extends ShapeNames, T> {
         p4x: number,
         p4y: number,
     ): ShapeInfo<'Bezier3', [Point2D, Point2D, Point2D, Point2D]>;
+
+    static circle(centerX: number, centerY: number, radius: number): ShapeInfo<'Circle', [Point2D, number]>;
+
+    static ellipse(
+        centerX: number,
+        centerY: number,
+        radiusX: number,
+        radiusY: number,
+    ): ShapeInfo<'Ellipse', [Point2D, number, number]>;
 }
