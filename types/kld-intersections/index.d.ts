@@ -38,6 +38,13 @@ export class ShapeInfo<Name extends ShapeNames, T> {
     constructor(name: ShapeNames, args: T);
 
     static line(p1x: number, p1y: number, p2x: number, p2y: number): ShapeInfo<'Line', [Point2D, Point2D]>;
+    static line(points: [Point2D, Point2D]): ShapeInfo<'Line', [Point2D, Point2D]>;
+    static line([...[x1, y1, x2, y2]]: [number, number, number, number]): ShapeInfo<'Line', [Point2D, Point2D]>;
+    static line(points: {
+        p1: Point2D | [number, number];
+        p2: Point2D | [number, number];
+    }): ShapeInfo<'Line', [Point2D, Point2D]>;
+    static line(p1: Point2D, p2: Point2D): ShapeInfo<'Line', [Point2D, Point2D]>;
 
     static arc(
         centerX: number,
@@ -86,6 +93,13 @@ export class ShapeInfo<Name extends ShapeNames, T> {
         ...points: IPoint2D[] | number[]
     ): ShapeInfo<
         'Polygon',
+        typeof points extends number[] ? Point2D[] : FixedLengthArray<Point2D, typeof points['length']>
+    >;
+
+    static polyline(
+        ...points: IPoint2D[] | number[]
+    ): ShapeInfo<
+        'Polyline',
         typeof points extends number[] ? Point2D[] : FixedLengthArray<Point2D, typeof points['length']>
     >;
 }
