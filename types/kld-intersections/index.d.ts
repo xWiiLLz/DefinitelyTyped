@@ -102,4 +102,29 @@ export class ShapeInfo<Name extends ShapeNames, T> {
         'Polyline',
         typeof points extends number[] ? Point2D[] : FixedLengthArray<Point2D, typeof points['length']>
     >;
+
+    static rectangle(
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        rx?: number,
+        ry?: number,
+    ): ShapeInfo<'Rectangle', []>;
+    static rectangle(props: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+        rx?: number;
+        ry?: number;
+    }): ShapeInfo<'Rectangle', []>;
+    static rectangle(props: { top: number; left: number; width: number; height: number }): ShapeInfo<'Rectangle', []>;
+    static rectangle(props: { top: number; left: number; width: number; height: number }): ShapeInfo<'Rectangle', []>;
+    static rectangle([...[x, y, width, height]]: [number, number, number, number]): ShapeInfo<'Rectangle', []>;
+    static rectangle([...[x, y, width, height, rx]]: [number, number, number, number, number]): ShapeInfo<'Path', []>;
+    static rectangle([...[x, y, width, height, rx, ry]]: [number, number, number, number, number, number]): ShapeInfo<
+        'Path',
+        []
+    >;
 }
